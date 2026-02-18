@@ -5,11 +5,11 @@ a small, school project about a SQL database being accessed by a php/html websit
 disclaimer: ai was used to assist in the coding process
 
 
-#requirements:
+### requirements:
 
 - XAMPP v3.3.0
 - a functional web browser
 
-#credits:
+### credits:
 
 - my project members (Arsalan and Sam)
