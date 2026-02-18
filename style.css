@@ -1,0 +1,231 @@
+/* ==============================
+   GLOBAL STYLES
+   ============================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Tahoma, sans-serif;
+}
+
+body {
+    background-color: #fafafa;
+    color: #2c2c2c;
+    line-height: 1.5;
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+p {
+    margin-bottom: 12px;
+}
+
+/* ==============================
+   HEADER / LOGO
+   ============================== */
+
+.header {
+    background-color: #000; /* schwarz */
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    box-sizing: border-box; /* wichtig, damit padding innerhalb bleibt */
+}
+
+.header img {
+    max-width: 70%;
+    height: auto;
+}
+
+/* ==============================
+   TITLES / HEADINGS
+   ============================== */
+
+.lwtitle {
+    font-size: 1.8rem;
+    color: #2c2c2c;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+h1, h2 {
+    margin-bottom: 16px;
+    color: #2c2c2c;
+}
+
+/* ==============================
+   BUTTONS / LINKS
+   ============================== */
+
+.adminbutton {
+    display: inline-block;
+    padding: 10px 16px;
+    background-color: #2c2c2c;
+    color: white;
+    border-radius: 6px;
+    border: 1px solid #111;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    margin-bottom: 10px;
+    transition: 0.2s;
+}
+
+.adminbutton:hover {
+    background-color: #444;
+    cursor: pointer;
+}
+
+/* ==============================
+   SEARCH BAR
+   ============================== */
+
+.searchbar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    margin-right: 1000px;
+}
+
+.searchbar input[type="text"] {
+    flex: 1;
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.searchbar button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    background-color: #2c2c2c;
+    color: white;
+    cursor: pointer;
+}
+
+.searchbar button:hover {
+    background-color: #444;
+}
+
+/* ==============================
+   BOOK LIST / ALLEBUECHER
+   ============================== */
+
+.allebuecherdarstellung {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px;
+    margin-bottom: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+}
+
+.buchtext {
+    flex: 1;
+    min-width: 0; /* important so text doesn’t break layout */
+}
+
+.rechtsbereich {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
+}
+
+.status {
+    font-weight: bold;
+    margin-right: 12px;
+}
+
+.status.verfuegbar {
+    color: green;
+}
+
+.status.ausgeliehen {
+    color: darkred;
+}
+
+.ausleihenbtn {
+    flex: 0 0 auto;
+    padding: 6px 10px;
+    border-radius: 4px;
+    background-color: #2c2c2c;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    transition: 0.2s;
+}
+
+.ausleihenbtn:hover {
+    background-color: #444;
+}
+
+.ausleihenbtn.disabled {
+    background-color: #999;
+    color: #eee;
+    cursor: not-allowed;
+}
+
+.rueckgaba {
+    white-space: nowrap;
+}
+
+/* ==============================
+   FORMS (REGISTRATION, ADMIN) 
+   ============================== */
+
+form {
+    margin-bottom: 20px;
+}
+
+form label {
+    display: block;
+    margin-top: 8px;
+    margin-bottom: 4px;
+}
+
+form input[type="text"],
+form input[type="number"] {
+    width: 100%;
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form button {
+    margin-top: 10px;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    background-color: #2c2c2c;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+form button:hover {
+    background-color: #444;
+}
+
+/* ==============================
+   UTILITY CLASSES
+   ============================== */
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hidden {
+    display: none;
+}
