@@ -1,55 +1,66 @@
 <?php
-require "config.php";
+require "config.php"; // include database connection and settings
 
+// retrieve inventory number from query string
 $inventar = trim($_GET["inventarnummer"] ?? "");
 
+// if no inventory number is provided, stop with an error
 if ($inventar === "") {
     die("Fehler: Keine Inventarnummer übergeben.");
 }
 
-$meldung = "";
+$meldung = ""; // message shown to the user
 
+// handle form submission
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+    // get the reader ID from the posted form
     $leseausweis = trim($_POST["leseausweis"] ?? "");
 
     if ($leseausweis === "") {
+        // no reader ID supplied
         $meldung = "Bitte Leser-ID eingeben.";
     } else {
 
-        // Existiert die Leser-ID?
+        // check if the reader ID exists in the database
         $stmt = $pdo->prepare("SELECT 1 FROM ausleiher WHERE leseausweisnummer = ?");
         $stmt->execute([$leseausweis]);
         $leserExistiert = (bool)$stmt->fetchColumn();
 
         if (!$leserExistiert) {
+            // invalid reader ID
             $meldung = "Diese Leser-ID existiert nicht.";
         } else {
 
-            // Ist das Buch schon ausgeliehen?
-            $stmt = $pdo->prepare("SELECT rueckgabe FROM ausleihe WHERE inventarnummer = ?");
+            // check whether the book is already loaned out
+            $stmt = $pdo->prepare("SELECT faellig_am FROM ausleihe WHERE inventarnummer = ? AND rueckgabe_am IS NULL");
             $stmt->execute([$inventar]);
             $bereitsAusgeliehen = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($bereitsAusgeliehen) {
-                $meldung = "Buch ist bereits ausgeliehen. Zurück erwartet am: " . $bereitsAusgeliehen["rueckgabe"];
+                // book currently checked out, show due date
+                $meldung = "Buch ist bereits ausgeliehen. Zurück erwartet am: " . $bereitsAusgeliehen["faellig_am"];
             } else {
+                // insert new loan record
+                $ausleihdatum = date("Y-m-d");
+                $faellig = date("Y-m-d", strtotime("+14 days"));
 
-                // Ausleihe eintragen
-                $rueckgabe = date("Y-m-d", strtotime("+14 days"));
+                $sql = "INSERT INTO ausleihe 
+                (inventarnummer, leseausweisnummer, ausleihdatum, faellig_am)
+                VALUES (?, ?, ?, ?)";
 
-                $sql = "INSERT INTO ausleihe (inventarnummer, leseausweisnummer, rueckgabe)
-                        VALUES (?, ?, ?)";
                 $stmt = $pdo->prepare($sql);
-                $stmt->execute([$inventar, $leseausweis, $rueckgabe]);
+                $stmt->execute([$inventar, $leseausweis, $ausleihdatum, $faellig]);
+
+                // increment the books total loan count
                 $sql = "UPDATE buecher
-                    SET anzahl_ausleihen = COALESCE(anzahl_ausleihen, 0) + 1
-                    WHERE inventarnummer = ?";
+                        SET anzahl_ausleihen = COALESCE(anzahl_ausleihen, 0) + 1
+                        WHERE inventarnummer = ?";
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute([$inventar]);
 
-
-                $meldung = "Ausleihe erfolgreich. Rückgabe bis: " . $rueckgabe;
+                // success message with due date
+                $meldung = "Ausleihe erfolgreich. Rückgabe bis: " . $faellig;
             }
         }
     }
@@ -65,21 +76,29 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </head>
 <body>
 
+<div class="container">
+    <a href="AlleBuecher.php" class="adminbutton">Zurück</a>
+
 <h1>Buch ausleihen</h1>
 
+<!-- show the selected inventory number -->
 <p>Inventarnummer: <?= htmlspecialchars($inventar) ?></p>
 
+<!-- display message if one exists (error or success) -->
 <?php if ($meldung !== ""): ?>
-    <p><?= htmlspecialchars($meldung) ?></p>
+    <p class="message"><?= htmlspecialchars($meldung) ?></p>
 <?php endif; ?>
 
+<!-- loan form: reader ID only -->
 <form method="post">
     <label for="leseausweis">Deine Leser-ID:</label>
     <input type="text" id="leseausweis" name="leseausweis" required>
     <button type="submit">Ausleihen</button>
 </form>
 
-<a href="AlleBuecher.php" class="adminbutton">Zurück</a>
+<!-- back link to book list -->
 
+
+</div> <!-- end container -->
 </body>
 </html>

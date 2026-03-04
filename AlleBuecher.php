@@ -8,9 +8,9 @@ $where = []; //array to hold WHERE conditions for SQL query
 $params = []; //array to hold parameters for prepared statement
 
 //base SQL query: select all books with their loan return dates
-$sql = "SELECT b.inventarnummer, b.titel, b.verfasser, b.gruppe, a.rueckgabe
+$sql = "SELECT b.inventarnummer, b.titel, b.verfasser, b.gruppe, a.faellig_am
         FROM buecher b
-        LEFT JOIN ausleihe a ON a.inventarnummer = b.inventarnummer";
+        LEFT JOIN ausleihe a ON a.inventarnummer = b.inventarnummer AND a.rueckgabe_am IS NULL";
 
 //empty search will list all books in buecher
 if ($q !== "") {
@@ -46,6 +46,9 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC); //fetch all results as associative ar
 </head>
 <body>
 
+<div class="container">
+        <a href="index.php" class="adminbutton">Zurück</a> <!-- link to index.php -->
+
 <h1>Alle Bücher</h1>
 
 <?php if ($q !== ""): ?>
@@ -61,7 +64,7 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC); //fetch all results as associative ar
 <?php else: ?>
 
     <?php foreach ($rows as $buch): ?>
-        <?php $istAusgeliehen = ($buch["rueckgabe"] !== null); ?>
+        <?php $istAusgeliehen = ($buch["faellig_am"] !== null); ?>
 
         <div class="allebuecherdarstellung">
 
@@ -74,9 +77,13 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC); //fetch all results as associative ar
                 <?php if ($istAusgeliehen): ?> <!-- if book loaned out, show status and return date -->
                     <span class="status ausgeliehen">(AUSGELIEHEN)</span>
                     <span class="rueckgabe">
-                        zurück erwartet am: <?= htmlspecialchars($buch["rueckgabe"]) ?>
+                        zurück erwartet am: <?= htmlspecialchars($buch["faellig_am"]) ?>
                     </span>
                     <span class="ausleihenbtn disabled">Ausleihen</span> <!-- disable button "Ausleihen" -->
+                    <a class="ausleihenbtn"
+                       href="rueckgabe.php?inventarnummer=<?= urlencode($buch["inventarnummer"]) ?>"> <!-- inventarnummer parameter -->
+                        Zurückgeben
+                    </a>
                 <?php else: ?> <!-- if book available, show "Ausleihen" button and link to Ausleihe.php -->
                     <span class="status verfuegbar">VERFÜGBAR</span>
                     <a class="ausleihenbtn"
@@ -93,9 +100,8 @@ $rows = $stmt->fetchAll(PDO::FETCH_ASSOC); //fetch all results as associative ar
 
 <?php endif; ?>
 
-<br>
-<a href="index.php" class="adminbutton">Zurück</a> <!-- link to index.php -->
-        <a href="rueckgabe.php" class="adminbutton">Rückgabe</a> <!-- link to return page -->
 
+
+</div> <!-- end container -->
 </body>
 </html>

@@ -1,4 +1,9 @@
 <?php
+// start session for authentication
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 // config.php
 
 $host = "localhost"; //localhost for local development

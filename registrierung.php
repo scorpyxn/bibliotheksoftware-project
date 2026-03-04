@@ -28,7 +28,7 @@ if (isset($_POST["registrieren"])) { //check if form submitted
 <html lang="de">
 <head>
     <?php if ($meldung !== ""): ?>
-    <p><?= htmlspecialchars($meldung) ?></p> <!-- htmlspecialchars to prevent XSS -->
+    <p class="message"><?= htmlspecialchars($melding) ?></p> <!-- htmlspecialchars to prevent XSS -->
     <?php endif; ?>
 
     <meta charset="UTF-8">
@@ -36,11 +36,10 @@ if (isset($_POST["registrieren"])) { //check if form submitted
     <link rel="stylesheet" href="/bibliothek/style.css">
 </head>
 
-<a href="index.php" class="adminbutton">Zurück</a>
-
-<h1>Registrieren</h1>
-
 <body>
+<div class="container">
+    <a href="index.php" class="adminbutton">Zurück</a>
+    <h1>Registrieren</h1>
     <form method="post"> <!-- form for user registration -->
         <label for="vorname">Vorname:</label>
         <input type="text" id="vorname" name="vorname" required><br>
@@ -59,5 +58,6 @@ if (isset($_POST["registrieren"])) { //check if form submitted
 
         <button type="submit" name="registrieren">Registrieren</button>
 </form>
+</div> <!-- end container -->
 </body>
 

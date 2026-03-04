@@ -10,11 +10,15 @@
 }
 
 body {
-    background-color: #fafafa;
-    color: #2c2c2c;
+    background-color: #1e1e1e; /* dark background */
+    color: #e0e0e0; /* light text */
     line-height: 1.5;
     padding: 0;
     margin: 0;
+}
+
+a {
+    color: #61dafb; /* light blue links */
 }
 
 a {
@@ -51,14 +55,14 @@ p {
 
 .lwtitle {
     font-size: 1.8rem;
-    color: #2c2c2c;
+    color: #fff;
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
 h1, h2 {
     margin-bottom: 16px;
-    color: #2c2c2c;
+    color: #fff; /* white titles for dark theme */
 }
 
 /* ==============================
@@ -68,11 +72,11 @@ h1, h2 {
 .adminbutton {
     display: inline-block;
     padding: 10px 16px;
-    background-color: #2c2c2c;
-    color: white;
+    background-color: #444;
+    color: #f0f0f0;
     border-radius: 6px;
-    border: 1px solid #111;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    border: 1px solid #666;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
     margin-bottom: 10px;
     transition: 0.2s;
 }
@@ -90,14 +94,16 @@ h1, h2 {
     display: flex;
     gap: 8px;
     margin-bottom: 20px;
-    margin-right: 1000px;
+    /* removed fixed right margin so search bar spans container */
 }
 
 .searchbar input[type="text"] {
     flex: 1;
     padding: 6px 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #555;
     border-radius: 4px;
+    background: #333;
+    color: #e0e0e0;
 }
 
 .searchbar button {
@@ -105,7 +111,7 @@ h1, h2 {
     border: none;
     border-radius: 4px;
     background-color: #2c2c2c;
-    color: white;
+    color: #f0f0f0; /* make button text light */
     cursor: pointer;
 }
 
@@ -124,14 +130,16 @@ h1, h2 {
     gap: 12px;
     padding: 10px;
     margin-bottom: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid #444;
     border-radius: 5px;
-    background-color: #f5f5f5;
+    background-color: #2a2a2a;
+    color: #e0e0e0;
 }
 
 .buchtext {
     flex: 1;
-    min-width: 0; /* important so text doesn’t break layout */
+    min-width: 0;
+    color: #fff;
 }
 
 .rechtsbereich {
@@ -152,6 +160,11 @@ h1, h2 {
 
 .status.ausgeliehen {
     color: darkred;
+}
+
+.ueberfaellig {
+    color: darkred;
+    font-weight: bold;
 }
 
 .ausleihenbtn {
@@ -175,7 +188,7 @@ h1, h2 {
     cursor: not-allowed;
 }
 
-.rueckgaba {
+.rueckgabe {
     white-space: nowrap;
 }
 
@@ -220,12 +233,86 @@ form button:hover {
    UTILITY CLASSES
    ============================== */
 
+.container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 0 15px;
+}
+
 .center {
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
 
+/* styled messages */
+.message {
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+.message.error {
+    background: #fdecea;
+    color: #611a15;
+    border: 1px solid #f5c6cb;
+}
+.message.success {
+    background: #e6ffed;
+    color: #1e4620;
+    border: 1px solid #c3e6cb;
+}
+
+/* table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+table th {
+    background-color: #2a2a2a;
+    color: #e0e0e0;
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #444;
+}
+
+table td {
+    color: #e0e0e0;
+}
+
+table td {
+    padding: 8px;
+    border: 1px solid #ccc;
+}
+
+table tr:nth-child(even) {
+    background-color: #333;
+}
+
+/* form section spacing */
+form {
+    background: #2a2a2a;
+    padding: 15px;
+    border: 1px solid #444;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+
 .hidden {
     display: none;
 }
+
+/* tables for Verwaltung */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+table th, table td {
+    border: 1px solid #ccc;
+    padding: 6px 8px;
+    text-align: left;
+}
+
