@@ -17,7 +17,9 @@
       <?php if (isset($_SESSION["rolle"]) && $_SESSION["rolle"] === "verwalter"): ?>
         <a href="verwaltung.php" class="adminbutton">Verwaltung</a>  <!-- link to admin page, only for admins -->
       <?php endif; ?>
-      <a href="registrierung.php" class="adminbutton">Registrieren</a> <!-- link to registration page -->
+      <?php if (!isset($_SESSION["benutzer"])): ?>
+        <a href="registrierung.php" class="adminbutton">Registrieren</a> <!-- link to registration page -->
+      <?php endif; ?>
       <?php if (isset($_SESSION["benutzer"])): ?>
         <span style="color: #e0e0e0; margin-right: 10px;">Angemeldet als: <?= htmlspecialchars($_SESSION["benutzer"]) ?></span>
         <a href="logout.php" class="adminbutton">Abmelden</a>

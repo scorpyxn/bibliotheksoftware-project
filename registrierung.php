@@ -1,6 +1,12 @@
 <?php
 require "config.php";
 
+// if already logged in, no need to register again
+if (isset($_SESSION["benutzer"])) {
+    header("Location: index.php");
+    exit;
+}
+
 $meldung = ""; //message init
 
 if (isset($_POST["registrieren"])) { //check if form submitted
@@ -28,7 +34,7 @@ if (isset($_POST["registrieren"])) { //check if form submitted
 <html lang="de">
 <head>
     <?php if ($meldung !== ""): ?>
-    <p class="message"><?= htmlspecialchars($melding) ?></p> <!-- htmlspecialchars to prevent XSS -->
+    <p class="message"><?= htmlspecialchars($meldung) ?></p> <!-- htmlspecialchars to prevent XSS -->
     <?php endif; ?>
 
     <meta charset="UTF-8">
