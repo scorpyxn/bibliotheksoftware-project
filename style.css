@@ -1,12 +1,20 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
+.buttonMolten {
+    background-color: #FF0000;
+    border: none;
+    cursor: pointer;
+    color: #000000;
+    padding: 5px 5px;
+    text-decoration: none;
+    margin: 2px;
 }
 
-titleclass {
-  font-size: 24px;
-  font-weight: bold;
-  margin: 20px;
-  font-family: 'Courier New', Courier, monospace;
+.buttonRow {
+    margin-bottom: 8px;
+}
+
+.div {
+    text-align: left;
+    margin-left: 0;
+    margin-right: auto;
+    margin-bottom: 5px;
 }
